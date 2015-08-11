@@ -1,6 +1,12 @@
 # jQuery Video Extend
 HTML5 Video Extend
 
+ * Adding a logo.
+ * Adding markers with labels.
+ * Playing YouTube video.
+ * Playing FLV video (basic support).
+ * Simply make responsive.
+
 [Demo](http://andchir.github.io/jquery-video-extend/)
 
 ``` html
