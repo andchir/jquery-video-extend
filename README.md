@@ -7,6 +7,8 @@ HTML5 Video Extend
  * Playing FLV video (basic support).
  * Simply make responsive.
 
+![](http://andchir.github.io/jquery-video-extend/img/screenshot.png)
+
 [Demo](http://andchir.github.io/jquery-video-extend/)
 
 ``` html
