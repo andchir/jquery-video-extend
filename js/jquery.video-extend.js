@@ -477,6 +477,7 @@
                 })
                 .css({
                     width: 'auto',
+                    maxWidth: 'none',
                     height: base.$el.height(),
                     cursor: 'pointer'
                 })
