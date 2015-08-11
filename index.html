@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Jquery Video Extend by andchir</title>
+    <title>jQuery Video Extend by andchir</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
@@ -11,15 +11,63 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    
+    <script src="javascripts/jquery-2.1.4.min.js"></script>
+    <script src="javascripts/jquery.video-extend.js"></script>
+    
+    <script>
+        $(document).bind('ready',function(){
+            
+            $('#video1').videoExtend({
+                logo: 'img/example_logo.png',
+                logoLink: 'http://wdevblog.net.ru/',
+                logoSize: [ 60, 40 ],
+                markers: [
+                    {
+                        time: 39.32,// seconds
+                        text: 'Chapter 1'
+                    },
+                    {
+                        time: 350.23,
+                        text: 'Chapter 2'
+                    },
+                    {
+                        time: 470.88,
+                        text: 'Chapter 3'
+                    },
+                    {
+                        time: 677.82,
+                        text: 'Chapter 4'
+                    }
+                ]
+            });
+            
+            $('#video2').videoExtend({
+                logo: 'img/example_logo.png',
+                logoLink: 'http://wdevblog.net.ru/',
+                logoSize: [ 60, 40 ],
+                logoPosition: [ 'auto', 10, 50, 'auto' ] // top, right, bottom, left
+            });
+            
+            $('video.video-extend').videoExtend({
+                logo: 'img/example_logo.png',
+                logoLink: 'http://wdevblog.net.ru/',
+                logoSize: [ 60, 40 ],
+                swfPath: 'swf/video-js.swf',
+                textPlay: 'Play movie'
+            });
+            
+        });
+    </script>
+    
   </head>
   <body>
     <div class="wrapper">
       <header>
-        <h1>Jquery Video Extend</h1>
+        <h1>jQuery Video Extend</h1>
         <p>HTML5 Video Extend</p>
 
         <p class="view"><a href="https://github.com/andchir/jquery-video-extend">View the Project on GitHub <small>andchir/jquery-video-extend</small></a></p>
-
 
         <ul>
           <li><a href="https://github.com/andchir/jquery-video-extend/zipball/master">Download <strong>ZIP File</strong></a></li>
@@ -38,6 +86,94 @@
 <li>Playing FLV video (basic support).</li>
 <li>Simply make responsive.</li>
 </ul>
+
+<pre class="code">&lt;script src="js/jquery-2.1.4.min.js"&gt;&lt;/script&gt;
+&lt;script src="js/jquery.video-extend.js"&gt;&lt;/script&gt;</pre>
+        
+        <h3>Player with logo and markers</h3>
+        
+        <video id="video1" width="640" height="360" poster="video/Sintel_poster.png" controls>
+            <source src="video/Sintel.mp4" type="video/mp4">
+        </video>
+        
+        <pre class="code">&lt;script&gt;
+    $(document).bind('ready',function(){
+        
+        $('#video1').videoExtend({
+            logo: 'img/example_logo.png',
+            logoLink: 'http://example.com/',
+            logoSize: [ 60, 40 ],
+            markers: [
+                {
+                    time: 39.32,// seconds
+                    text: 'Chapter 1'
+                },
+                {
+                    time: 350.23,
+                    text: 'Chapter 2'
+                },
+                {
+                    time: 470.88,
+                    text: 'Chapter 3'
+                },
+                {
+                    time: 677.82,
+                    text: 'Chapter 4'
+                }
+            ]
+        });
+        
+    });
+&lt;/script&gt;
+&lt;video id="video1" width="640" height="360" poster="video/Sintel_poster.png" controls&gt;
+    &lt;source src="video/Sintel.mp4" type="video/mp4"&gt;
+&lt;/video&gt;</pre>
+
+<h3>Play YouTube video</h3>
+
+    <video id="video2" width="640" height="360" controls>
+        <source src="https://www.youtube.com/watch?v=eRsGyueVLvQ" type="video/youtube">
+    </video>
+        
+        <pre class="code">&lt;script&gt;
+    $(document).bind('ready',function(){
+        
+        $('#video2').videoExtend({
+            logo: 'img/example_logo.png',
+            logoLink: 'http://example.com/',
+            logoSize: [ 60, 40 ],
+            logoPosition: [ 'auto', 10, 50, 'auto' ] // top, right, bottom, left
+        });
+        
+    });
+&lt;/script&gt;
+&lt;video id="video2" width="640" height="360" controls&gt;
+    &lt;source src="https://www.youtube.com/watch?v=eRsGyueVLvQ" type="video/youtube"&gt;
+&lt;/video&gt;</pre>
+        
+        <h3>Play FLV video (basic support)</h3>
+        
+        <video class="video-extend" width="640" height="360" poster="video/Sintel_poster.png" controls>
+            <source src="video/Sintel.flv" type="video/flv">
+        </video>
+        
+        <pre class="code">&lt;script&gt;
+    $(document).bind('ready',function(){
+        
+        $('video.video-extend').videoExtend({
+            logo: 'img/example_logo.png',
+            logoLink: 'http://example.com/',
+            logoSize: [ 60, 40 ],
+            swfPath: 'swf/video-js.swf',
+            textPlay: 'Play movie'
+        });
+        
+    });
+&lt;/script&gt;
+&lt;video class="video-extend" width="640" height="360" poster="video/Sintel_poster.png" controls&gt;
+    &lt;source src="video/Sintel.flv" type="video/flv"&gt;
+&lt;/video&gt;</pre>
+
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/andchir">andchir</a></p>
