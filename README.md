@@ -20,7 +20,7 @@ $(document).bind('ready',function(){
     
     $('#video1').videoExtend({
         logo: 'img/example_logo.png',
-        logoLink: 'http://wdevblog.net.ru/',
+        logoLink: 'http://example.com/',
         logoSize: [ 60, 40 ],
         markers: [
             {
