@@ -9,6 +9,8 @@ HTML5 Video Extend
 
 ![](http://andchir.github.io/jquery-video-extend/img/screenshot.png)
 
+[Wiki](https://github.com/andchir/jquery-video-extend/wiki)
+
 [Demo](http://andchir.github.io/jquery-video-extend/)
 
 ``` html
