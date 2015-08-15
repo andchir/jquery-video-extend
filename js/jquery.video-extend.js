@@ -24,7 +24,8 @@
         // Initialize
         base.init = function(){
             
-            base.options = $.extend({}, videoExtend.defaultOptions, options);
+            var attributes = base.getAttributes();
+            base.options = $.extend({}, videoExtend.defaultOptions, options, attributes);
             base.browser = base.getBrowserName();
             
             var video_src = base.$el.attr('src') || base.$el.children('source').attr('src'),
@@ -88,6 +89,19 @@
             
             return browser;
             
+        };
+        
+        base.getAttributes = function(){
+            var attributes = {};
+            $.each( base.$el.get(0).attributes, function( index, attr ) {
+                if( attr.name.indexOf('data-') > -1 ) {
+                    var value = attr.value;
+                    if( /\[(.*)\]/.test( value ) )
+                        value = $.parseJSON( value );
+                    attributes[ attr.name.substr(5) ] = value;
+                }
+            });
+            return attributes;
         };
         
         base.eventsHandler = function(e){
