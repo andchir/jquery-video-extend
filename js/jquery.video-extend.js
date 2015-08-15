@@ -4,7 +4,7 @@
  *
  * jQuery plugin (MIT license)
  *
- * @version 1.0
+ * @version 1.1
  * @author <andchir@gmail.com> Andchir
  */
 
