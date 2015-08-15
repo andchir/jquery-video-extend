@@ -128,6 +128,20 @@
 &lt;video id="video1" width="640" height="360" poster="video/Sintel_poster.png" controls&gt;
     &lt;source src="video/Sintel.mp4" type="video/mp4"&gt;
 &lt;/video&gt;</pre>
+        
+    <h4>Another way:</h4>
+        
+        <pre class="code">&lt;script&gt;
+    $(document).bind('ready',function(){
+        $('video').videoExtend();
+    });
+&lt;/script&gt;
+
+&lt;video width="640" height="360" data-logo="img/example_logo.png" data-markers='[{"time":39,"text":"Chapter 1"},{"time":350,"text":"Chapter 2"}]'&gt;
+    &lt;source src="video/Sintel.mp4" type="video/mp4"&gt;
+&lt;/video&gt;</pre>
+        
+        <p>Any parameters can be specified by a prefix "data-". The array must be JSON string.</p>
 
 <h3>Play YouTube video</h3>
 
@@ -173,6 +187,14 @@
 &lt;video class="video-extend" width="640" height="360" poster="video/Sintel_poster.png" controls&gt;
     &lt;source src="video/Sintel.flv" type="video/flv"&gt;
 &lt;/video&gt;</pre>
+        
+    <h3>API</h3>
+    
+    <pre class="code">&lt;script&gt;
+    $('#video1').get(0).play();// Play video
+&lt;/script&gt;</pre>
+    
+    <a href="http://www.w3.org/2010/05/video/mediaevents.html" target="_blank">http://www.w3.org/2010/05/video/mediaevents.html</p>
 
       </section>
       <footer>
