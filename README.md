@@ -50,8 +50,17 @@ $(document).bind('ready',function(){
 </script>
 ```
 
+``` html
+<video id="video1" width="640" height="360" poster="video/Sintel_poster.png" controls>
+    <source src="video/Sintel.mp4" type="video/mp4">
+</video>
+```
 
+###Another way:
 
-
-
-
+``` html
+<video width="640" height="360" data-logo="img/example_logo.png" data-markers='[{"time":39,"text":"Chapter 1"},{"time":350,"text":"Chapter 2"}]'>
+    <source src="video/Sintel.mp4" type="video/mp4">
+</video>
+```
+Any parameters can be specified by a prefix "data-". The array must be JSON string.
