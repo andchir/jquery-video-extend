@@ -4,7 +4,7 @@
  *
  * jQuery plugin (MIT license)
  *
- * @version 1.1
+ * @version 1.1.2
  * @author <andchir@gmail.com> Andchir
  */
 
@@ -469,7 +469,7 @@
             base.$el = $('#'+obj_id);
             
             setTimeout(function(){
-                if ( /http:\/\/|https:\/\//.test( video_src ) === false ) {
+                if ( /http:\/\/|https:\/\//.test( video_src ) === false && video_src.substr(0,1) != '/' ) {
                     video_src = window.location.pathname + video_src;
                 }
                 base.player = base.$el.get(0);
