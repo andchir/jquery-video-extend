@@ -1,4 +1,5 @@
 <!doctype html>
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="author" content="Andchir">
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>HTML5 Video Extend</title>
     
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/jquery.video-extend.js"></script>
     
     <style>
@@ -16,7 +17,7 @@
     </style>
     
     <script>
-        $(document).bind('ready',function(){
+        $(document).ready(function(){
             
             $('#video1').videoExtend({
                 logo: 'img/example_logo.png',
@@ -75,7 +76,7 @@
             <li>Simply make responsive.</li>
         </ul>
         
-        <pre class="code">&lt;script src="js/jquery-2.1.4.min.js"&gt;&lt;/script&gt;
+        <pre class="code">&lt;script src="js/jquery-3.1.1.min.js"&gt;&lt;/script&gt;
 &lt;script src="js/jquery.video-extend.js"&gt;&lt;/script&gt;</pre>
         
         <h3>Player with logo and markers</h3>
@@ -85,7 +86,7 @@
         </video>
         
         <pre class="code">&lt;script&gt;
-    $(document).bind('ready',function(){
+    $(document).ready(function(){
         
         $('#video1').videoExtend({
             logo: 'img/example_logo.png',
@@ -132,7 +133,7 @@
         </video>
         
         <pre class="code">&lt;script&gt;
-    $(document).bind('ready',function(){
+    $(document).ready(function(){
         
         $('#video2').videoExtend({
             logo: 'img/example_logo.png',
@@ -154,7 +155,7 @@
         </video>
         
         <pre class="code">&lt;script&gt;
-    $(document).bind('ready',function(){
+    $(document).ready(function(){
         
         $('video.video-extend').videoExtend({
             logo: 'img/example_logo.png',
@@ -176,7 +177,7 @@
     $('#video1').get(0).play();// Play video
 &lt;/script&gt;</pre>
     
-    <a href="http://www.w3.org/2010/05/video/mediaevents.html" target="_blank">http://www.w3.org/2010/05/video/mediaevents.html</p>
+    <a href="http://www.w3.org/2010/05/video/mediaevents.html" target="_blank">http://www.w3.org/2010/05/video/mediaevents.html</a>
     
     </div>
 </body>

@@ -4,11 +4,13 @@
  *
  * jQuery plugin (MIT license)
  *
- * @version 1.1.2
+ * @version 1.1.3beta1
  * @author <andchir@gmail.com> Andchir
  */
 
 (function($){
+
+    "use strict";
     
     var videoExtend = function(el, options){
         var base = this;
@@ -105,6 +107,8 @@
         };
         
         base.eventsHandler = function(e){
+
+            var markers_container;
             
             switch( e.type ){
                 case 'play':
@@ -130,18 +134,18 @@
                     break;
                 case 'mouseover':
                     
-                    var markers_container = base.$el.parent().find('.video-extend-progress-bar');
+                    markers_container = base.$el.parent().find('.video-extend-progress-bar');
                     
-                    if ( base.options.markers && markers_container.size() > 0 ) {
+                    if ( base.options.markers && markers_container.length > 0 ) {
                         markers_container.show();
                     }
                     
                     break;
                 case 'mouseout':
                     
-                    var markers_container = base.$el.parent().find('.video-extend-progress-bar');
+                    markers_container = base.$el.parent().find('.video-extend-progress-bar');
                     
-                    if ( base.options.markers && markers_container.size() > 0 ) {
+                    if ( base.options.markers && markers_container.length > 0 ) {
                         markers_container.hide();
                     }
                     
@@ -258,9 +262,9 @@
             $( window )
                 .bind('resize',function(){
                     
-                    if ( base.$el.parent().find('.video-extend-progress-bar').size() > 0 ) {
+                    if ( base.$el.parent().find('.video-extend-progress-bar').length > 0 ) {
                         
-                        playerControlsSize = base.getControlsSize();
+                        var playerControlsSize = base.getControlsSize();
                         base.$el.parent().find('.video-extend-progress-bar')
                             .css({
                                 width: base.$el.width() - playerControlsSize.left - playerControlsSize.right
@@ -365,7 +369,7 @@
                     height: videoHeight
                 })
                 .insertAfter( base.$el )
-                .load(function(){
+                .on('load', function(){
                     base.loadYTApi( frame_id );
                 });
             
@@ -387,7 +391,7 @@
         
         base.loadYTApi = function( frame_id ){
             
-            if ( $('#yt_iframe_api').size() == 0 ) {
+            if ( $('#yt_iframe_api').length == 0 ) {
                 
                 $('<script/>',{
                         src: 'https://www.youtube.com/iframe_api',
@@ -518,7 +522,7 @@
                         position: 'absolute',
                         top: 0,
                         left: 0,
-                        textAlign: 'center',
+                        textAlign: 'center'
                     })
                     .appendTo('<div/>')
                     .parent()
@@ -538,7 +542,7 @@
             
             var poster_wrapper = base.$el.parent().find('.video-extend-poster-container');
             
-            if ( poster_wrapper.size() ) {
+            if ( poster_wrapper.length > 0 ) {
                 
                 var $image = poster_wrapper.find('img'),
                     wrapper_width = poster_wrapper.width(),

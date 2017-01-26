@@ -14,7 +14,7 @@ HTML5 Video Extend
 [Demo](http://andchir.github.io/jquery-video-extend/)
 
 ``` html
-<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/jquery.video-extend.js"></script>
 ```
 
