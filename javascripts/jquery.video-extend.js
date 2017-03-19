@@ -4,30 +4,32 @@
  *
  * jQuery plugin (MIT license)
  *
- * @version 1.1.2
+ * @version 1.1.3
  * @author <andchir@gmail.com> Andchir
  */
 
 (function($){
-    
+
+    "use strict";
+
     var videoExtend = function(el, options){
         var base = this;
-        
+
         // Access to jQuery and DOM versions of element
         base.$el = $(el);
         base.player = el;
         base.timer = null;
-        
+
         // Add a reverse reference to the DOM object
         base.$el.data('videoExtend', base);
-        
+
         // Initialize
         base.init = function(){
-            
+
             var attributes = base.getAttributes();
             base.options = $.extend({}, videoExtend.defaultOptions, options, attributes);
             base.browser = base.getBrowserName();
-            
+
             var video_src = base.$el.attr('src') || base.$el.children('source').attr('src'),
                 poster = base.$el.attr('poster');
             base.isYouTube = /youtube\.com|youtu\.be/.test( video_src );
@@ -39,7 +41,7 @@
                 base.embedFlashVideo( video_src );
             }
             else {
-                
+
                 base.$el
                     .css({
                         display: 'block',
@@ -52,25 +54,25 @@
                         }
                         base.options.initialized = true;
                     });
-                
+
             }
-            
+
             base.makeResponsive();
             base.addLogo();
-            
+
             if ( base.isFlashVideo && poster ) {
                 base.addPoster( poster );
             }
-            
+
         };
-        
+
         // Get browser name
         base.getBrowserName = function(){
-            
+
             var userAgent = navigator.userAgent,
                 browser = 'unknown';
-            
-            if ( /msie/i.test(userAgent) || "ActiveXObject" in window )
+
+            if ( /msie/i.test(userAgent) || /edge/i.test(userAgent) || "ActiveXObject" in window )
                 browser = 'ie';
             else if ( /firefox/i.test(userAgent) )
                 browser = 'firefox';
@@ -86,11 +88,11 @@
             else if ( /ipad/i.test(userAgent) ) {
                 browser = 'ipad';
             }
-            
+
             return browser;
-            
+
         };
-        
+
         base.getAttributes = function(){
             var attributes = {};
             $.each( base.$el.get(0).attributes, function( index, attr ) {
@@ -103,22 +105,24 @@
             });
             return attributes;
         };
-        
+
         base.eventsHandler = function(e){
-            
+
+            var markers_container;
+
             switch( e.type ){
                 case 'play':
-                    
+
                     if ( base.options.logoAutoHide ) {
                         clearTimeout( base.timer );
                         base.timer = setTimeout(function(){
                             base.$el.parent().find('.video-extend-logo-container').fadeOut(1000);
                         },1500);
                     }
-                    
+
                     break;
                 case 'pause':
-                    
+
                     if ( base.options.logoAutoHide ) {
                         if ( !base.player.seeking ) {
                             clearTimeout( base.timer );
@@ -126,39 +130,39 @@
                                 .stop().css('opacity',1).show();
                         }
                     }
-                    
+
                     break;
                 case 'mouseover':
-                    
-                    var markers_container = base.$el.parent().find('.video-extend-progress-bar');
-                    
-                    if ( base.options.markers && markers_container.size() > 0 ) {
+
+                    markers_container = base.$el.parent().find('.video-extend-progress-bar');
+
+                    if ( base.options.markers && markers_container.length > 0 ) {
                         markers_container.show();
                     }
-                    
+
                     break;
                 case 'mouseout':
-                    
-                    var markers_container = base.$el.parent().find('.video-extend-progress-bar');
-                    
-                    if ( base.options.markers && markers_container.size() > 0 ) {
+
+                    markers_container = base.$el.parent().find('.video-extend-progress-bar');
+
+                    if ( base.options.markers && markers_container.length > 0 ) {
                         markers_container.hide();
                     }
-                    
+
                     break;
             }
-            
+
         };
-        
+
         base.getControlsSize = function( browser ){
-            
+
             browser = browser || base.browser;
-            var size = { left: 63, right: 232, bottom: 25 };
-            
+            var size = { left: 120, right: 220, bottom: 20 };
+
             switch ( browser ) {
                 case 'ie':
-                    size.left = 173;
-                    size.right = 150;
+                    size.left = 165;
+                    size.right = 140;
                     size.bottom = 36;
                     break;
                 case 'firefox':
@@ -180,21 +184,21 @@
                     //default
                     break;
             }
-            
+
             return size;
-            
+
         };
-        
+
         // Add logo
         base.addLogo = function(){
-            
+
             if ( !base.options.logo ) {
                 return;
             }
-            
+
             var logo = $('<img/>',{
-                    src: base.options.logo
-                })
+                src: base.options.logo
+            })
                 .css({
                     position: 'absolute',
                     zIndex: 200,
@@ -214,7 +218,7 @@
                     position: 'relative',
                     width: base.options.responsive ? '100%' : base.$el.width()
                 });
-            
+
             if ( base.options.logoLink ) {
                 logo.children('img')
                     .css('cursor','pointer')
@@ -223,21 +227,21 @@
                         win.focus();
                     });
             }
-            
+
             base.$el
                 .before(logo);
-            
+
         };
-        
+
         // Make responsive
         base.makeResponsive = function(){
-            
+
             if ( !base.options.responsive ) {
                 return;
             }
-            
+
             var maxWidth = base.$el.attr('width') || base.$el.width();
-            
+
             base.$el
                 .wrap('<div></div>')
                 .css({
@@ -249,56 +253,56 @@
                     width: '100%',
                     maxWidth: maxWidth + 'px'
                 });
-                
-                if ( base.options.alignCenter ) {
-                    base.$el.parent('.video-extend-wrapper')
-                        .css('margin', '0 auto');
-                }
-            
+
+            if ( base.options.alignCenter ) {
+                base.$el.parent('.video-extend-wrapper')
+                    .css('margin', '0 auto');
+            }
+
             $( window )
                 .bind('resize',function(){
-                    
-                    if ( base.$el.parent().find('.video-extend-progress-bar').size() > 0 ) {
-                        
-                        playerControlsSize = base.getControlsSize();
+
+                    if ( base.$el.parent().find('.video-extend-progress-bar').length > 0 ) {
+
+                        var playerControlsSize = base.getControlsSize();
                         base.$el.parent().find('.video-extend-progress-bar')
                             .css({
                                 width: base.$el.width() - playerControlsSize.left - playerControlsSize.right
                             });
-                        
+
                     }
-                    
+
                     base.centerPoster();
-                    
+
                 });
-            
+
         };
-        
+
         // Add markers
         base.addMarkers = function(){
-            
+
             if ( !base.options.markers || base.options.markers.length == 0 ) {
                 return;
             }
-            
+
             base.addProgressBarControl();
-            
+
             setTimeout(function(){
-                
+
                 var duration = base.player.duration,
                     markers_container = base.$el.next('.video-extend-progress-bar'),
                     playerControlsSize = base.getControlsSize();
-                
+
                 if ( !duration ) {
                     return;
                 }
-                
+
                 base.options.markers.forEach(function(marker){
-                    
+
                     var percent = parseInt( marker.time / duration * 100 );
                     var marker_el = $('<div/>',{
-                            title: marker.text
-                        })
+                        title: marker.text
+                    })
                         .css({
                             width: 8,
                             height: 8,
@@ -312,7 +316,7 @@
                             marginLeft: '-4px'
                         })
                         .appendTo( markers_container );
-                    
+
                     marker_el
                         .bind('click', function(){
                             base.player.currentTime = marker.time;
@@ -320,19 +324,19 @@
                         .bind('mouseover mouseout', function(){
                             markers_container.show();
                         });
-                    
+
                 });
-                
+
             }, 500);
-            
+
         };
-        
+
         // Add progress bar control
         base.addProgressBarControl = function(){
-            
+
             var playerWidth = base.$el.width(),
                 playerControlsSize = base.getControlsSize();
-                
+
             $('<div/>')
                 .insertAfter(base.$el)
                 .addClass('video-extend-progress-bar')
@@ -342,38 +346,38 @@
                     width: playerWidth - playerControlsSize.left - playerControlsSize.right,
                     height: 0
                 });
-            
+
         };
-        
+
         // Embed YouTube video
         base.embedYoutube = function( video_src ){
-            
+
             var videoWidth = base.$el.width(),
                 videoHeight = base.$el.height(),
                 frame_id = 'video' + new Date().getTime(),
                 video_id = base.getYoutubeVideoId( video_src );
-            
+
             var youtubeIframe = $('<iframe/>',{
-                    src: 'https://www.youtube-nocookie.com/embed/' + video_id + '?enablejsapi=1&origin=' + window.location.origin,
-                    id: frame_id,
-                    frameborder: 0,
-                    width: videoWidth,
-                    height: videoHeight
-                })
+                src: 'https://www.youtube-nocookie.com/embed/' + video_id + '?enablejsapi=1&origin=' + window.location.origin,
+                id: frame_id,
+                frameborder: 0,
+                width: videoWidth,
+                height: videoHeight
+            })
                 .css({
                     width: videoWidth,
                     height: videoHeight
                 })
                 .insertAfter( base.$el )
-                .load(function(){
+                .on('load', function(){
                     base.loadYTApi( frame_id );
                 });
-            
+
             base.$el.remove();
             base.$el = youtubeIframe;
-            
+
         };
-        
+
         // Get YouTube video ID
         // http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url
         base.getYoutubeVideoId = function( url ){
@@ -384,30 +388,30 @@
             }
             return '';
         };
-        
+
         base.loadYTApi = function( frame_id ){
-            
-            if ( $('#yt_iframe_api').size() == 0 ) {
-                
+
+            if ( $('#yt_iframe_api').length == 0 ) {
+
                 $('<script/>',{
-                        src: 'https://www.youtube.com/iframe_api',
-                        id: 'yt_iframe_api'
-                    })
+                    src: 'https://www.youtube.com/iframe_api',
+                    id: 'yt_iframe_api'
+                })
                     .insertAfter($('script:last'));
-                
+
                 window.onYouTubeIframeAPIReady = function() {
                     base.setupYTEvents( frame_id );
                 };
-                
+
             }
             else {
                 base.setupYTEvents( frame_id );
             }
-            
+
         };
-        
+
         base.setupYTEvents = function( frame_id ){
-            
+
             base.player = new YT.Player(frame_id, {
                 events: {
                     "onStateChange": function(event){
@@ -422,12 +426,12 @@
                     }
                 }
             });
-            
+
         };
-        
+
         // Embed Flash video
         base.embedFlashVideo = function( video_src ){
-            
+
             var videoWidth = base.$el.width(),
                 videoHeight = base.$el.height(),
                 obj_id = 'video' + new Date().getTime(),
@@ -447,7 +451,7 @@
                     allowScriptAccess: 'always',
                     allowNetworking: 'all'
                 };
-                
+
             var objTag = '<object type="application/x-shockwave-flash"';
             for( var key in attributes ){
                 if ( attributes.hasOwnProperty( key ) ) {
@@ -455,19 +459,19 @@
                 }
             }
             objTag += '>';
-            
+
             for( var key in params ){
                 if ( params.hasOwnProperty( key ) ) {
                     objTag += "\n" + '<param name="' + key + '" value="' + params[key] + '" />';
                 }
             }
-            
+
             objTag += "\n" + '</object>';
-            
+
             base.$el.after( objTag );
             base.$el.remove();
             base.$el = $('#'+obj_id);
-            
+
             setTimeout(function(){
                 if ( /http:\/\/|https:\/\//.test( video_src ) === false && video_src.substr(0,1) != '/' ) {
                     video_src = window.location.pathname + video_src;
@@ -478,25 +482,25 @@
                     base.player.vjs_play();
                 }
             },1000);
-            
+
         };
-        
+
         // Add poster
         base.addPoster = function( posterUrl ){
-            
+
             if( posterUrl ){
                 var posterImg = $('<img/>',{
                     src: posterUrl,
                     title: base.options.textPlay
                 })
-                .css({
-                    width: 'auto',
-                    maxWidth: 'none',
-                    height: base.$el.height(),
-                    cursor: 'pointer'
-                })
-                .appendTo('<div/>')
-                .parent()
+                    .css({
+                        width: 'auto',
+                        maxWidth: 'none',
+                        height: base.$el.height(),
+                        cursor: 'pointer'
+                    })
+                    .appendTo('<div/>')
+                    .parent()
                     .bind('click',function(){
                         if ( base.isFlashVideo ) {
                             $('img',this).hide();
@@ -518,43 +522,43 @@
                         position: 'absolute',
                         top: 0,
                         left: 0,
-                        textAlign: 'center',
+                        textAlign: 'center'
                     })
                     .appendTo('<div/>')
                     .parent()
-                        .addClass('video-extend-poster-container')
-                        .css({
-                            position: 'relative',
-                            width: base.options.responsive ? '100%' : base.$el.width()
-                        })
-                        .insertBefore( base.$el );
-                
+                    .addClass('video-extend-poster-container')
+                    .css({
+                        position: 'relative',
+                        width: base.options.responsive ? '100%' : base.$el.width()
+                    })
+                    .insertBefore( base.$el );
+
                 base.centerPoster();
             }
-            
+
         };
-        
+
         base.centerPoster = function(){
-            
+
             var poster_wrapper = base.$el.parent().find('.video-extend-poster-container');
-            
-            if ( poster_wrapper.size() ) {
-                
+
+            if ( poster_wrapper.length > 0 ) {
+
                 var $image = poster_wrapper.find('img'),
                     wrapper_width = poster_wrapper.width(),
                     image_width = $image.width();
-                
+
                 $image
                     .css({
                         marginLeft: ( ( wrapper_width - image_width ) / 2 ) + 'px'
                     });
             }
-            
+
         };
-        
+
         base.init();
     };
-    
+
     // Default options
     videoExtend.defaultOptions = {
         backgroundColor: '#000',
@@ -572,11 +576,11 @@
         onPlay: null,
         onPause: null
     };
-    
+
     $.fn.videoExtend = function(options){
         return this.each(function(){
             new videoExtend(this, options);
         });
     };
-    
+
 })(jQuery);
