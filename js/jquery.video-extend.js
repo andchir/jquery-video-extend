@@ -4,7 +4,7 @@
  *
  * jQuery plugin (MIT license)
  *
- * @version 1.1.3beta1
+ * @version 1.1.3
  * @author <andchir@gmail.com> Andchir
  */
 
@@ -72,7 +72,7 @@
             var userAgent = navigator.userAgent,
                 browser = 'unknown';
             
-            if ( /msie/i.test(userAgent) || "ActiveXObject" in window )
+            if ( /msie/i.test(userAgent) || /edge/i.test(userAgent) || "ActiveXObject" in window )
                 browser = 'ie';
             else if ( /firefox/i.test(userAgent) )
                 browser = 'firefox';
@@ -157,12 +157,12 @@
         base.getControlsSize = function( browser ){
             
             browser = browser || base.browser;
-            var size = { left: 63, right: 232, bottom: 25 };
+            var size = { left: 120, right: 220, bottom: 20 };
             
             switch ( browser ) {
                 case 'ie':
-                    size.left = 173;
-                    size.right = 150;
+                    size.left = 165;
+                    size.right = 140;
                     size.bottom = 36;
                     break;
                 case 'firefox':
