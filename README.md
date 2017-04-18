@@ -56,7 +56,7 @@ $(document).bind('ready',function(){
 </video>
 ```
 
-###Another way:
+### Another way:
 
 ``` html
 <video width="640" height="360" data-logo="img/example_logo.png" data-markers='[{"time":39,"text":"Chapter 1"},{"time":350,"text":"Chapter 2"}]'>
